@@ -1,11 +1,13 @@
 import React from "react";
 import { FiInbox, FiSearch } from "react-icons/fi";
 import { GoHome } from "react-icons/go";
+import { useNavigate, useLocation } from "react-router-dom";
 
 // Layout PageContainer component
 const PageContainer: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  const navigate = useNavigate();
   return (
     <div className="relative flex h-full min-h-screen w-full flex-col">
       {/* Navbar */}
@@ -29,13 +31,32 @@ const PageContainer: React.FC<{ children: React.ReactNode }> = ({
       {/* bottom nav */}
       <div className="fixed bottom-0 z-10 w-full p-2 bg-white rounded-tr-2xl rounded-tl-2xl">
         <div className="flex justify-between p-4">
-          <div className="bg-active px-6 py-2 rounded-3xl">
+          <div
+            className={`bg-active px-6 py-2 rounded-3xl ${
+              useLocation().pathname === "/" ? "bg-active" : "bg-white"
+            }`}
+            onClick={() => navigate("/")}
+          >
             <GoHome className="text-3xl" />
           </div>
-          <div className="px-6 py-2">
+          <div
+            className={`bg-active px-6 py-2 rounded-3xl ${
+              useLocation().pathname === "/create-message"
+                ? "bg-active"
+                : "bg-white"
+            }`}
+            onClick={() => navigate("/create-message")}
+          >
             <FiInbox className="text-3xl" />
           </div>
-          <div className="px-6 py-2">
+          <div
+            className={`bg-active px-6 py-2 rounded-3xl ${
+              useLocation().pathname === "/search-name"
+                ? "bg-active"
+                : "bg-white"
+            }`}
+            onClick={() => navigate("/search-name")}
+          >
             <FiSearch className="text-3xl" />
           </div>
         </div>
