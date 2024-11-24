@@ -29,10 +29,10 @@ const PageContainer: React.FC<{ children: React.ReactNode }> = ({
       </footer> */}
 
       {/* bottom nav */}
-      <div className="fixed bottom-0 z-10 w-full p-2 bg-white rounded-tr-2xl rounded-tl-2xl">
-        <div className="flex justify-between p-4">
+      <div className="fixed bottom-0 z-10 w-full p-2 bg-white rounded-tr-2xl rounded-tl-2xl transition-all">
+        <div className="flex justify-between p-4 transition-all">
           <div
-            className={`bg-active px-6 py-2 rounded-3xl ${
+            className={`bg-active px-6 py-2 rounded-3xl transition-all  ${
               useLocation().pathname === "/" ? "bg-active" : "bg-white"
             }`}
             onClick={() => navigate("/")}
@@ -40,7 +40,7 @@ const PageContainer: React.FC<{ children: React.ReactNode }> = ({
             <GoHome className="text-3xl" />
           </div>
           <div
-            className={`bg-active px-6 py-2 rounded-3xl ${
+            className={`bg-active px-6 py-2 rounded-3xl transition-all ${
               useLocation().pathname === "/create-message"
                 ? "bg-active"
                 : "bg-white"
@@ -50,7 +50,7 @@ const PageContainer: React.FC<{ children: React.ReactNode }> = ({
             <FiInbox className="text-3xl" />
           </div>
           <div
-            className={`bg-active px-6 py-2 rounded-3xl ${
+            className={`bg-active px-6 py-2 rounded-3xl transition-all ${
               useLocation().pathname === "/search-name"
                 ? "bg-active"
                 : "bg-white"

@@ -1,14 +1,12 @@
-import { FaArrowRight } from "react-icons/fa";
-
 const CreateMessage = () => {
   return (
     <>
       <div className="flex flex-col ital my-8 italic text-4xl font-semibold text-center">
-        <h1>Create Message</h1>
+        <h1 className="text-white">Create Message</h1>
       </div>
       <form className="flex flex-col p-5 bg-white bg-opacity-20 gap-y-2 drop-shadow-2xl rounded-xl mb-28">
         <div className="mb-5">
-          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+          <label className=" text-white block mb-2 text-sm font-medium dark:text-white">
             Nama Penerima
           </label>
           <input
@@ -20,7 +18,7 @@ const CreateMessage = () => {
           />
         </div>
         <div className="mb-5">
-          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+          <label className=" text-white block mb-2 text-sm font-medium dark:text-white">
             Judul Pesan
           </label>
           <input
@@ -32,7 +30,7 @@ const CreateMessage = () => {
           />
         </div>
         <div className="mb-5">
-          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+          <label className=" text-white block mb-2 text-sm font-medium dark:text-white">
             Jurusan Penerima
           </label>
           <select
@@ -45,7 +43,7 @@ const CreateMessage = () => {
           </select>
         </div>
         <div className="mb-5">
-          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+          <label className=" text-white block mb-2 text-sm font-medium dark:text-white">
             Tahun Angkatan Penerima
           </label>
           <select
@@ -61,7 +59,7 @@ const CreateMessage = () => {
           </select>
         </div>
         <div className="mb-5">
-          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+          <label className=" text-white block mb-2 text-sm font-medium dark:text-white">
             Isi Pesan
           </label>
           <textarea
@@ -73,7 +71,7 @@ const CreateMessage = () => {
           ></textarea>
         </div>
         <div className="mb-5">
-          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+          <label className=" text-white block mb-2 text-sm font-medium dark:text-white">
             Pilih Lagu
           </label>
           <input
