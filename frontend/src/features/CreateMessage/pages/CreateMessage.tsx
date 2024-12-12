@@ -1,90 +1,224 @@
+import { useState } from "react";
+import { Button } from "../../../components/ui/Button";
+import { GiLoveLetter } from "react-icons/gi";
+import { jurusan, angkatan } from ".";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 const CreateMessage = () => {
+  const navigate = useNavigate();
+
+  const [show, setShow] = useState(false);
+
+  const [anonymous, setAnonymous] = useState(false);
+  const [senderName, setSenderName] = useState("");
+  const [recipientName, setRecipientName] = useState("");
+  const [major, setMajor] = useState("");
+  const [year, setYear] = useState("");
+  const [title, setTitle] = useState("");
+  const [message, setMessage] = useState("");
+
+  const saveMessage = async (e: any) => {
+    e.preventDefault();
+    try {
+      await axios.post("http://localhost:5000/messages", {
+        senderName,
+        recipientName,
+        major,
+        year,
+        title,
+        message,
+      });
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const checkedAnonymous = () => {
+    setAnonymous(!anonymous);
+    setSenderName("");
+  };
+
+  const showForm = () => {
+    setShow(!show);
+  };
   return (
     <>
-      <div className="flex flex-col ital my-8 italic text-4xl font-semibold text-center">
-        <h1 className="text-white">Create Message</h1>
+      <div className="flex flex-col mt-52 m-0 p-0 justify-center items-center gap-y-3">
+        <div className="text-3xl font-semibold">
+          <h1>Create Message</h1>
+        </div>
+        <div className="flex justify-center items-center gap-x-4">
+          <Button
+            className="bg-secondary text-black text-xl font-semibold flex items-center justify-center hover:bg-active"
+            onClick={showForm}
+          >
+            Create
+            <GiLoveLetter className="text-primary" />
+          </Button>
+        </div>
       </div>
-      <form className="flex flex-col p-5 bg-white bg-opacity-20 gap-y-2 drop-shadow-2xl rounded-xl mb-28">
-        <div className="mb-5">
-          <label className=" text-white block mb-2 text-sm font-medium dark:text-white">
-            Nama Penerima
-          </label>
-          <input
-            type="text"
-            id="name"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-            placeholder="Chandra"
-            required
-          />
-        </div>
-        <div className="mb-5">
-          <label className=" text-white block mb-2 text-sm font-medium dark:text-white">
-            Judul Pesan
-          </label>
-          <input
-            type="text"
-            id="name"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-            placeholder="Kangen Banget"
-            required
-          />
-        </div>
-        <div className="mb-5">
-          <label className=" text-white block mb-2 text-sm font-medium dark:text-white">
-            Jurusan Penerima
-          </label>
-          <select
-            id="jurusan"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-            required
-          >
-            <option value="FT">FT</option>
-            <option value="SI">SI</option>
-          </select>
-        </div>
-        <div className="mb-5">
-          <label className=" text-white block mb-2 text-sm font-medium dark:text-white">
-            Tahun Angkatan Penerima
-          </label>
-          <select
-            id="angkatan"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-            required
-          >
-            <option value="2024">2024</option>
-            <option value="2023">2023</option>
-            <option value="2022">2022</option>
-            <option value="2021">2021</option>
-            <option value="2020">2020</option>
-          </select>
-        </div>
-        <div className="mb-5">
-          <label className=" text-white block mb-2 text-sm font-medium dark:text-white">
-            Isi Pesan
-          </label>
-          <textarea
-            rows={5}
-            id="message"
-            className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
-            placeholder="Hei Sekarang Kamu Lagi Ngapain? Pastinya kamu sekarang lebih bahagia bersamanya bukan?"
-            required
-          ></textarea>
-        </div>
-        <div className="mb-5">
-          <label className=" text-white block mb-2 text-sm font-medium dark:text-white">
-            Pilih Lagu
-          </label>
-          <input
-            type="search"
-            id="lagu"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-            required
-          />
-        </div>
-        <div className=" bg-transparent outline bg-opacity-50 rounded-lg flex justify-center gap-x-7 py-2 items-center backdrop:blur-lg">
-          <button className="text-lg text-white font-semibold">Submit</button>
-        </div>
-      </form>
+      {show && (
+        <form
+          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 px-2"
+          onSubmit={saveMessage}
+        >
+          <div className="relative w-full max-w-2xl bg-white rounded-lg shadow-lg overflow-hidden">
+            {/* Header */}
+            <div className="p-4 border-b">
+              <h2 className="text-xl font-bold text-gray-800">Buat Pesan</h2>
+              <p className="text-sm text-gray-600">
+                Isi semua informasi yang diperlukan.
+              </p>
+            </div>
+
+            {/* Scrollable Content */}
+            <div className="p-4 max-h-[70vh] overflow-y-auto">
+              {/* Section 1: Informasi Pribadi */}
+              <div className="">
+                <div className="">
+                  <div className="flex justify-between items-center align-middle">
+                    <div className="block mb-2 text-sm font-medium text-gray-700">
+                      {!anonymous ? (
+                        "Nama Pengirim"
+                      ) : (
+                        <span className="invisible">Placeholder</span>
+                      )}
+                    </div>
+                    <div className="flex justify-end items-end">
+                      <input
+                        type="checkbox"
+                        checked={anonymous}
+                        onClick={checkedAnonymous}
+                      />
+                      <label className="ml-2 text-sm font-medium text-gray-700">
+                        Anonim
+                      </label>
+                    </div>
+                  </div>
+                  {!anonymous && (
+                    <input
+                      type="text"
+                      className="w-full bg-gray-50 border border-gray-300 text-gray-700 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2 mb-4"
+                      placeholder="Masukkan nama lengkap"
+                      required
+                      value={senderName}
+                      onChange={(e) => setSenderName(e.target.value)}
+                    />
+                  )}
+                </div>
+                <div>
+                  <label className="block mb-2 text-sm font-medium text-gray-700">
+                    Nama Penerima
+                  </label>
+                  <input
+                    type="text"
+                    className="w-full bg-gray-50 border border-gray-300 text-gray-700 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2 mb-4"
+                    placeholder="Masukkan nama lengkap"
+                    required
+                    value={recipientName}
+                    onChange={(e) => setRecipientName(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              {/* Section 2: Kontak */}
+              <div className="mb-6">
+                <div>
+                  <label className="block mb-2 text-sm font-medium text-gray-700">
+                    Jurusan
+                  </label>
+                  <select
+                    id="jurusan"
+                    className="w-full bg-gray-50 border border-gray-300 text-gray-700 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2 mb-4"
+                    required
+                    value={major}
+                    onChange={(e) => setMajor(e.target.value)}
+                  >
+                    <option value="" disabled>
+                      -- Pilih Jurusan --
+                    </option>
+                    {jurusan.map((item, index) => (
+                      <option key={index} value={item}>
+                        {item}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className="block mb-2 text-sm font-medium text-gray-700">
+                    Angkatan Penerima
+                  </label>
+                  <select
+                    id="angkatan"
+                    className="w-full bg-gray-50 border border-gray-300 text-gray-700 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2"
+                    required
+                    value={year}
+                    onChange={(e) => setYear(e.target.value)}
+                  >
+                    <option value="" disabled>
+                      -- Pilih Angkatan --
+                    </option>
+                    {angkatan.map((item, index) => (
+                      <option key={index} value={item}>
+                        {item}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              {/* Section 3: Alamat */}
+              <div className="">
+                <div>
+                  <label className="block mb-2 text-sm font-medium text-gray-700">
+                    Judul Pesan
+                  </label>
+                  <input
+                    type="text"
+                    className="w-full bg-gray-50 border border-gray-300 text-gray-700 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2 mb-4"
+                    placeholder="Masukkan Judul"
+                    required
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label className="block mb-2 text-sm font-medium text-gray-700">
+                    Isi Pesan
+                  </label>
+                  <textarea
+                    rows={4}
+                    className="w-full bg-gray-50 border border-gray-300 text-gray-700 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2 "
+                    placeholder="Masukkan isi pesan"
+                    required
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+
+            {/* Sticky Footer */}
+            <div className="p-4 border-t flex justify-end bg-gray-50">
+              <button
+                type="button"
+                className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 mr-2"
+                onClick={showForm}
+              >
+                Batal
+              </button>
+              <button
+                type="submit"
+                className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+              >
+                Kirim
+              </button>
+            </div>
+          </div>
+        </form>
+      )}
     </>
   );
 };
